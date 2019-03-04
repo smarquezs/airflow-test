@@ -1,0 +1,4 @@
+*.pid
+logs/*
+*.pyc
+*.log

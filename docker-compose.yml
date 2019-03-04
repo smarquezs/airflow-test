@@ -1,0 +1,21 @@
+version: '2'
+services:
+  postgres:
+    image: postgres:9.6
+    environment:
+      - POSTGRES_USER=airflow
+      - POSTGRES_PASSWORD=airflow
+      - POSTGRES_DB=airflow
+  webserver:
+    build: .
+    depends_on:
+      - postgres
+    environment:
+      - LOAD_EX=n
+      - EXECUTOR=Local
+    volumes:
+      - .:/app/airflow
+    ports:
+      - '8080:8080'
+    tty: true
+    command: bash -c 'airflow initdb && /usr/bin/supervisord'
